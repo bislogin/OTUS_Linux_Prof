@@ -342,3 +342,9 @@ Device        Start      End Sectors Size Type
 /dev/md0p4 12572672 16762879 4190208   2G Linux filesystem
 /dev/md0p5 16762880 20951039 4188160   2G Linux filesystem
 ```
+
+Добавим все разделы в fstab
+
+```
+for i in $(seq 1 5); do echo "UUID=$(blkid -o value -s UUID /dev/md0p$i) /raid/part$i ext4 defaults 0 2" >> /etc/fstab; done
+```
