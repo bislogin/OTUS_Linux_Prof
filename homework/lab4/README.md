@@ -135,8 +135,9 @@ otus4  compressratio         1.00x                  -
 
 ### 2. Определение настроек пула   
 
-Скачиваем архив в домашний каталог:   
-`root@ubuntu:~# wget -O archive.tar.gz --no-check-certificate 'https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download'
+Скачиваем архив в домашний каталог:  
+```
+root@ubuntu:~# wget -O archive.tar.gz --no-check-certificate 'https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download'
 --2026-07-26 16:48:52--  https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download
 Resolving drive.usercontent.google.com (drive.usercontent.google.com)... 209.85.233.132, 2a00:1450:4010:c03::84
 Connecting to drive.usercontent.google.com (drive.usercontent.google.com)|209.85.233.132|:443... connected.
@@ -249,7 +250,7 @@ errors: No known data errors
 ```
 
 Команда zpool status выдаст нам информацию о составе импортированного пула.   
-Если у Вас уже есть пул с именем otus, то можно поменять его имя во время импорта: **zpool import -d zpoolexport/ otus newotus**  
+Если у нас уже есть пул с именем otus, то можно поменять его имя во время импорта: **zpool import -d zpoolexport/ otus newotus**  
 
 Далее нам нужно определить настройки: **zpool get all otus** 
 Запрос сразу всех параметром файловой системы: **zfs get all otus**   
