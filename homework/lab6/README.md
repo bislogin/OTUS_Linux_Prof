@@ -117,7 +117,7 @@ No user sessions are running outdated binaries.
 No VM guests are running outdated hypervisor (qemu) binaries on this host.
 ```
 
-Запустите установленное приложение из любой точки терминала:   
+Запустим установленное приложение из любой точки терминала:   
 ```
 root@ubuntu:~/my-repository# my-hello
 Привет! Это мое кастомное приложение из DEB-пакета!
