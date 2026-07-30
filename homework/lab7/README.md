@@ -47,6 +47,8 @@ root@ubuntu:/# reboot
 
 Для получения доступа необходимо открыть GUI VirtualBox (или другой системы виртуализации), запустить виртуальную машину и при выборе ядра для загрузки нажать e - в данном контексте edit. Попадаем в окно, где мы можем изменить параметры загрузки:  
 
+<img src="https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab7/grub2.png" />  
+
 #### Способ 1. init=/bin/bash
 
 В конце строки, начинающейся с linux, добавляем init=/bin/bash и нажимаем сtrl-x для загрузки в систему
@@ -55,11 +57,21 @@ root@ubuntu:/# reboot
 ```
 root@ubuntu:/# mount -o remount,rw /
 ```
-<img src="https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab7/grub.png" />  
+
 
 После чего можно убедиться, записав данные в любой файл или прочитав вывод
 команды:
 
 
-<img src="https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab7/grub.png" />  
+<img src="https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab7/grub3.png" />  
 
+#### Способ 2. Recovery mode
+
+В меню загрузчика на первом уровне выбрать второй пункт (Advanced options…), далее загрузить пункт меню с указанием recovery mode в названии.    
+Получим меню режима восстановления.   
+
+
+
+В этом меню сначала включаем поддержку сети (network) для того, чтобы файловая система перемонтировалась в режим read/write (либо это можно сделать вручную).
+Далее выбираем пункт root и попадаем в консоль с пользователем root. Если ранее был устанавлен пароль для пользователя root (по умолчанию его нет), то необходимо его ввести. 
+В этой консоли можно производить любые манипуляции с системой.
