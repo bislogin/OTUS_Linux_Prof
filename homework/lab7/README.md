@@ -38,7 +38,12 @@ done
 root@ubuntu:/# reboot
 ```
 
-https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab7/grub.png
-
 При загрузке в окне виртуальной машины мы должны увидеть меню загрузчика.
+
+
+<img src="https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab7/grub.png" />  
+
+### Попасть в систему без пароля несколькими способами   
+
+Для получения доступа необходимо открыть GUI VirtualBox (или другой системы виртуализации), запустить виртуальную машину и при выборе ядра для загрузки нажать e - в данном контексте edit. Попадаем в окно, где мы можем изменить параметры загрузки:  
 
