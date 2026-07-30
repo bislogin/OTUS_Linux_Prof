@@ -38,7 +38,7 @@ done
 root@ubuntu:/# reboot
 ```
 
-
+https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab7/grub.png
 
 При загрузке в окне виртуальной машины мы должны увидеть меню загрузчика.
 
