@@ -14,8 +14,8 @@
 ```
 #!/bin/bash
 
-# Print the table header
-printf "%-7s %-7s %-8s %s\n" "PID" "PPID" "STATUS" "COMMAND"
+# Print the table header with wide spacing for the full command
+printf "%-7s %-7s %-8s %s\n" "PID" "PPID" "STATUS" "COMMAND_LINE"
 echo "--------------------------------------------------------"
 
 # Iterate through all directories in /proc that consist only of numbers
@@ -33,18 +33,14 @@ for pid_dir in /proc/[0-9]*/; do
 
     # Read the command line arguments (replace null bytes with spaces)
     if [ -s "${pid_dir}cmdline" ]; then
+        # xargs removes trailing whitespaces and formats it nicely
         cmd=$(tr '\0' ' ' < "${pid_dir}cmdline" | xargs)
     else
         # If cmdline is empty (kernel thread), get the name from stat brackets
         cmd="[$(awk -F'(' '{print $2}' "${pid_dir}stat" | awk -F')' '{print $1}')]"
     fi
 
-    # Truncate long command lines for better terminal readability
-    if [ ${#cmd} -gt 50 ]; then
-        cmd="${cmd:0:47}..."
-    fi
-
-    # Print the formatted table row
+    # Print the formatted table row (command is not truncated anymore)
     printf "%-7s %-7s %-8s %s\n" "$pid" "$ppid" "$state" "$cmd"
 done
 
@@ -53,7 +49,7 @@ done
 Проверяем работу скрипта:
 ```
 root@ubuntu:/home# ./my_ps.sh
-PID     PPID    STATUS   COMMAND
+PID     PPID    STATUS   COMMAND_LINE
 --------------------------------------------------------
 1       0       S        [systemd]
 11      2       I        [kworker/R-mm_pe]
@@ -200,21 +196,22 @@ PID     PPID    STATUS   COMMAND
 658661  384912  S        [apache2]
 658662  384912  S        [apache2]
 66      2       I        [kworker/R-ipv6_]
-660181  2       I        [kworker/0:2-events]
-661725  2       I        [kworker/u5:3-events_power_efficient]
-661880  2       I        [kworker/u6:0-events_power_efficient]
-661947  2       I        [kworker/u5:1-events_unbound]
-662394  2       I        [kworker/u6:3-events_power_efficient]
+660181  2       I        [kworker/0:2-cgroup_release]
 662445  2       I        [kworker/1:2-events]
 662473  2       I        [kworker/u6:2-events_power_efficient]
 662565  2       I        [kworker/u5:4-events_power_efficient]
-662672  2       I        [kworker/u6:4-events_power_efficient]
-662814  2       I        [kworker/u5:0-events_unbound]
-663709  2       I        [kworker/0:0-cgroup_release]
-663729  2       I        [kworker/1:0-cgroup_release]
+662814  2       I        [kworker/u5:0-events_power_efficient]
 664644  2       I        [kworker/u6:1-events_unbound]
-664673  2       I        [kworker/0:1]
-664675  30953   S        [my_ps.sh]
+664673  2       I        [kworker/0:1-events]
+665586  2       I        [kworker/u6:0-events_unbound]
+668399  2       I        [kworker/1:0-cgroup_release]
+668465  2       I        [kworker/u5:2-events_power_efficient]
+668472  2       I        [kworker/u5:3-events_power_efficient]
+671205  1       S        [packagekitd]
+671395  2       I        [kworker/0:0-cgroup_release]
+671411  2       I        [kworker/1:1-cgroup_free]
+671423  2       I        [kworker/u6:3-events_unbound]
+671429  30953   S        [my_ps.sh]
 696     2       I        [kworker/R-nfit]
 7       2       I        [kworker/R-netns]
 717     1       S        [dbus-daemon]
