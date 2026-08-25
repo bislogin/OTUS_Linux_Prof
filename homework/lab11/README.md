@@ -145,7 +145,7 @@ Aug 25 15:24:11 localhost.localdomain systemd[1]: Started nginx.service - The ng
 
 Также можно проверить работу nginx из браузера. Заходим в любой браузер на хосте и переходим по адресу http://122.20.1.200:4881
 
-
+![Alt text](https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab11/alma.png)
 
 Проверить статус параметра можно с помощью команды: getsebool -a | grep nis_enabled
 ```
