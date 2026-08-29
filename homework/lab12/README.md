@@ -151,3 +151,4 @@ root@ubuntu:/home/ansible#
 
 Проверим, зайдем на 172.20.1.20:8080
 
+![Alt text](https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab12/ansible.png)
