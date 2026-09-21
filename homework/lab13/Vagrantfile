@@ -1,0 +1,74 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/jammy64"
+
+  # Настройка сети: проброс портов (гость 80 -> хост 8080)
+  config.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+
+  # Настройка памяти
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.name = "vagrant-disks-task"
+  end
+
+  # Встроенный механизм Vagrant для добавления дополнительных дисков
+  config.vm.disk :disk, size: "1GB", name: "disk1"
+  config.vm.disk :disk, size: "1GB", name: "disk2"
+
+  # Провижининг: настройка дисков + установка и настройка Apache
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "=== 1. Начало настройки дисков ==="
+
+    DISKS=$(lsblk -dn -o NAME,TYPE | awk '$2=="disk" && $1!="sda" {print "/dev/"$1}')
+    
+    COUNTER=1
+    for dev in $DISKS; do
+      mount_point="/mnt/disk$COUNTER"
+      echo "Обработка диска $dev для $mount_point..."
+      
+      mkfs.ext4 -F "$dev"
+      mkdir -p "$mount_point"
+      mount "$dev" "$mount_point"
+      
+      if ! grep -q "$mount_point" /etc/fstab; then
+        echo "$dev  $mount_point  ext4  defaults,nofail  0  2" >> /etc/fstab
+        echo "Диск $dev успешно добавлен в /etc/fstab"
+      fi
+      
+      COUNTER=$((COUNTER + 1))
+    done
+
+    echo "=== Проверка примонтированных дисков ==="
+    df -h | grep /mnt
+
+
+    echo "=== 2. Установка веб-сервера Apache ==="
+    # Обновляем списки пакетов и устанавливаем Apache2 без лишних вопросов (-y)
+    apt-get update
+    apt-get install -y apache2
+
+    echo "=== 3. Подмена файла index.html ==="
+    # Создаем свой собственный index.html в корневой директории Apache
+    cat <<EOF > /var/www/html/index.html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vagrant Apache Server</title>
+        <style>
+            body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f9; }
+            h1 { color: #333; }
+            p { color: #666; }
+        </style>
+    </head>
+    <body>
+        <h1>Привет! Apache успешно работает внутри Vagrant!</h1>
+        <p>Этот файл index.html был автоматически подменен в процессе провижининга.</p>
+    </body>
+    </html>
+EOF
+
+    # Перезапускаем Apache, чтобы убедиться, что он работает и подхватил изменения
+    systemctl restart apache2
+    echo "=== Apache успешно настроен! ==="
+  SHELL
+end

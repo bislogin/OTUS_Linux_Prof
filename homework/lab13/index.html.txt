@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vagrant + Apache</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 6px solid #2196F3;
+        }
+        h1 {
+            color: #1565C0;
+            margin-top: 0;
+        }
+        .note {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tech-info {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #616161;
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        a {
+            color: #1976D2;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Тестовый стенд  Vagrant + Apache</h1>
+        <p>Здесь я экспериментирую с автоматизацией развертывания веб-сервера</p>
+    </header>
+
+    <div class="note">
+        <p>Если ты видишь эту страницу, значит эксперимент удался</p>
+    </div>
+
+    <section class="tech-info">
+        <h2>Что я использовал в этом проекте:</h2>
+        <ul>
+            <li><strong>Веб-сервер:</strong> Apache 2 (из репозитория Ubuntu)</li>
+            <li><strong>Операционная система:</strong> Ubuntu 22.04 LTS (Jammy Jellyfish)</li>
+            <li><strong>Рабочая директория:</strong> /vagrant/ (синхронизируется с моей хост-машиной)</li>
+            <li><strong>Как подключиться:</strong>
+                <ul>
+                    <li>Через браузер: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></li>
+                    <li>Или по внутреннему IP: <a href="http://192.168.56.11" target="_blank">http://192.168.56.11</a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Что я сделал:</h2>
+        <p>1. Настроил внутреннею сеть в Vagrantfile</p>
+        <p>2. Синхронизировал дисковое пространство</p>
+        <p>3. Выполнил Provisioning и установил Apache</p>
+        
+        <p class="note">
+            <strong>Обновление:</strong> Пока что все работает отлично! Когда я изменяю этот файл на своем хосте,
+            изменения сразу же появляются на VM благодаря синхронизации папок.
+        </p>
+    </section>
+
+    <footer>
+        <p>Страница создана вручную <span id="date"></span> в рамках изучения Vagrant</p>
+    </footer>
+
+    <script>
+        // Простое обновление даты
+        const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 
+                       'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+        const now = new Date();
+        const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()} года`;
+        document.getElementById('date').textContent = dateStr;
+    </script>
+</body>
+</html>
