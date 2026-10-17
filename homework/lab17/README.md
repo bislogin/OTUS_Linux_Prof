@@ -74,10 +74,19 @@ input(type="imtcp" port="514")
 
 В конец файла /etc/rsyslog.conf добавляем правила приёма сообщений от хостов:
 ```
-#ADD remote logg
-$template RemoteLogs,"/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log
-*.* ?Remotelogs
-& ~
+# Сначала объявляем пути к файлам жестко
+$template NginxAccessFile,"/var/log/rsyslog/%HOSTNAME%/nginx_access.log"
+$template NginxErrorFile,"/var/log/rsyslog/%HOSTNAME%/nginx_error.log"
+
+# Если в логе есть тег или текст nginx_error — пишем в файл ошибок
+if $programname == 'nginx_error' or $msg contains 'nginx_error' then ?NginxErrorFile
+& stop
+
+# Если в логе есть тег или текст nginx_access — пишем в файл доступа
+if $programname == 'nginx_access' or $msg contains 'nginx_access' then ?NginxAccessFile
+& stop
+
+# Все остальные логи (если прилетит что-то еще) распределяем по старому шаблону
 ```
 Данные параметры будут отправлять в папку /var/log/rsyslog логи, которые будут приходить от других серверов. Например, Access-логи nginx от сервера web, будут идти в файл /var/log/rsyslog/web/nginx_access.log
 
@@ -172,3 +181,7 @@ root@ubuntu:~# cat /var/log/rsyslog/ubuntu/nginx_error.log
 2026-10-17T14:31:08+00:00 ubuntu nginx_error: 2026/10/17 14:31:08 [error] 3307#3307: *4 directory index of "/var/www/html/" is forbidden, client: ::1, server: _, request: "GET / HTTP/1.1", host: "localhost"
 ```
 
+Для настройки rsyslog на отправку всех логов на центральный сервер логов в /etc/rsyslog.conf на web надо прописать 
+```
+*.* @172.20.1.20:514
+```
