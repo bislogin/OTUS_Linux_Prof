@@ -248,7 +248,7 @@ root@ubuntu:/srv/images# systemctl restart apache2
 
 ![Alt text](https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab20/pxe.png)
 
-
+![Alt text](https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab20/pxe2.png)
 
 
 
