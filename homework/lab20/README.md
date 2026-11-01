@@ -54,31 +54,31 @@ root@ubuntu:~# mkdir -p /srv/tftp
 
 5) скачиваем файлы для сетевой установки Ubuntu 24.04 и распаковываем их в каталог /srv/tftp
 ```
-root@ubuntu:~# wget http://cdimage.ubuntu.com/ubuntu-server/resolute/daily-live/current/resolute-netboot-amd64.tar.gz 
---2026-11-01 15:13:35--  http://cdimage.ubuntu.com/ubuntu-server/resolute/daily-live/current/resolute-netboot-amd64.tar.gz
-Resolving cdimage.ubuntu.com (cdimage.ubuntu.com)... 185.125.190.40, 91.189.91.124, 185.125.190.37, ...
-Connecting to cdimage.ubuntu.com (cdimage.ubuntu.com)|185.125.190.40|:80... connected.
+root@ubuntu:~# wget http://cdimage.ubuntu.com/ubuntu-server/noble/daily-live/current/noble-netboot-amd64.tar.gz
+--2026-11-01 16:22:20--  http://cdimage.ubuntu.com/ubuntu-server/noble/daily-live/current/noble-netboot-amd64.tar.gz
+Resolving cdimage.ubuntu.com (cdimage.ubuntu.com)... 91.189.91.124, 185.125.190.40, 185.125.190.37, ...
+Connecting to cdimage.ubuntu.com (cdimage.ubuntu.com)|91.189.91.124|:80... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 118442517 (113M) [application/x-gzip]
-Saving to: ‘resolute-netboot-amd64.tar.gz’
+Length: 102997006 (98M) [application/x-gzip]
+Saving to: ‘noble-netboot-amd64.tar.gz’
 
-resolute-netboot-amd64.tar.gz                              100%[=====================================================================================================================================>] 112.96M  10.4MB/s    in 12s     
+noble-netboot-amd64.tar.gz                                 100%[=====================================================================================================================================>]  98.23M  6.09MB/s    in 17s     
 
-2026-11-01 15:13:48 (9.34 MB/s) - ‘resolute-netboot-amd64.tar.gz’ saved [118442517/118442517]
+2026-11-01 16:22:37 (5.92 MB/s) - ‘noble-netboot-amd64.tar.gz’ saved [102997006/102997006]
 
-root@ubuntu:~# tar -xzvf resolute-netboot-amd64.tar.gz -C /srv/tftp
+root@ubuntu:~# tar -xzvf noble-netboot-amd64.tar.gz -C /srv/tftp
 ./
 ./amd64/
-./amd64/grubx64.efi
-./amd64/initrd
-./amd64/pxelinux.0
+./amd64/ldlinux.c32
 ./amd64/pxelinux.cfg/
 ./amd64/pxelinux.cfg/default
+./amd64/pxelinux.0
+./amd64/linux
+./amd64/initrd
 ./amd64/grub/
 ./amd64/grub/grub.cfg
+./amd64/grubx64.efi
 ./amd64/bootx64.efi
-./amd64/ldlinux.c32
-./amd64/linux
 root@ubuntu:~# 
 ```
 
