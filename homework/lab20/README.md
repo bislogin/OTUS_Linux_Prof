@@ -246,8 +246,7 @@ root@ubuntu:/srv/images# systemctl restart apache2
 и мы должны увидеть автоматическую установку
 
 
-![Alt text](https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab1/update_1.png)
-
+![Alt text](https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab20/pxe.png)
 
 
 
