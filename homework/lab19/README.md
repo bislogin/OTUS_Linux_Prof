@@ -7,7 +7,7 @@
 
 ### Дано
 
-!Alt(github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab19/network.png)
+![Alt text](github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab19/network.png)
 
 
 
