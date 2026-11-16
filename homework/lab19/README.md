@@ -334,7 +334,56 @@ net.ipv4.ip_forward = 1
 
 Настройки добавил в отдельный файлах.
 
-
-
+### Проверка:
+```
+root@centralServers:~# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:50:00:00:3c:00 brd ff:ff:ff:ff:ff:ff
+    altname enp0s3
+    inet 192.168.0.2/28 brd 192.168.0.15 scope global ens3
+       valid_lft forever preferred_lft forever
+    inet6 fe80::250:ff:fe00:3c00/64 scope link 
+       valid_lft forever preferred_lft forever
+3: ens4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:50:00:00:3c:01 brd ff:ff:ff:ff:ff:ff
+    altname enp0s4
+root@centralServers:~# ping 192.168.1.2
+PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.
+64 bytes from 192.168.1.2: icmp_seq=1 ttl=62 time=1.83 ms
+64 bytes from 192.168.1.2: icmp_seq=2 ttl=62 time=1.86 ms
+64 bytes from 192.168.1.2: icmp_seq=3 ttl=62 time=1.89 ms
+64 bytes from 192.168.1.2: icmp_seq=4 ttl=62 time=1.81 ms
+^C
+--- 192.168.1.2 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.813/1.846/1.886/0.028 ms
+root@centralServers:~# traceroute 192.168.1.2
+traceroute to 192.168.1.2 (192.168.1.2), 30 hops max, 60 byte packets
+ 1  _gateway (192.168.0.1)  0.554 ms  0.361 ms  0.278 ms
+ 2  192.168.255.6 (192.168.255.6)  1.127 ms  1.057 ms  0.991 ms
+ 3  192.168.1.2 (192.168.1.2)  1.660 ms  1.489 ms  1.418 ms
+root@centralServers:~# ping 192.168.2.130
+PING 192.168.2.130 (192.168.2.130) 56(84) bytes of data.
+64 bytes from 192.168.2.130: icmp_seq=1 ttl=62 time=1.75 ms
+64 bytes from 192.168.2.130: icmp_seq=2 ttl=62 time=1.65 ms
+64 bytes from 192.168.2.130: icmp_seq=3 ttl=62 time=2.09 ms
+64 bytes from 192.168.2.130: icmp_seq=4 ttl=62 time=2.12 ms
+^C
+--- 192.168.2.130 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3006ms
+rtt min/avg/max/mdev = 1.654/1.902/2.116/0.203 ms
+root@centralServers:~# traceroute 192.168.2.130
+traceroute to 192.168.2.130 (192.168.2.130), 30 hops max, 60 byte packets
+ 1  _gateway (192.168.0.1)  0.350 ms  0.268 ms  0.219 ms
+ 2  192.168.255.10 (192.168.255.10)  1.084 ms  1.008 ms  0.783 ms
+ 3  192.168.2.130 (192.168.2.130)  1.346 ms  1.285 ms  1.225 ms
+root@centralServers:~# 
+```
 
 
