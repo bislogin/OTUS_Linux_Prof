@@ -1,0 +1,15 @@
+network:
+    ethernets:
+        ens3:
+            dhcp4: no
+            addresses: [192.168.2.130/26]
+            gateway4: 192.168.2.129
+            nameservers:
+                addresses:
+                    - 192.168.2.129
+    version: 2
+
+
+
+
+
