@@ -69,7 +69,7 @@ Last login: Sun Nov 15 14:21:12 2026 from 172.20.1.10
 root@inetRouter:~# 
 ```
 
-Добавили inetrouter2:
+### Добавили inetrouter2:
 
 ![Alt text](https://github.com/bislogin/OTUS_Linux_Prof/blob/main/homework/lab21/iptables.png)
 
@@ -134,3 +134,75 @@ Last login: Tue Nov 17 06:41:20 2026 from 192.168.255.2
 root@inetRouter:~# 
 ```
 
+### 3 запустить nginx на centralServer. 
+```
+root@centralServers:~# apt install nginx
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  nginx-common
+Suggested packages:
+  fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  nginx nginx-common
+0 upgraded, 2 newly installed, 0 to remove and 338 not upgraded.
+Need to get 570 kB of archives.
+After this operation, 1,602 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://lv.archive.ubuntu.com/ubuntu noble-updates/main amd64 nginx-common all 1.24.0-2ubuntu7.19 [45.3 kB]
+Get:2 http://lv.archive.ubuntu.com/ubuntu noble-updates/main amd64 nginx amd64 1.24.0-2ubuntu7.19 [525 kB]
+Fetched 570 kB in 1s (734 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package nginx-common.
+(Reading database ... 83593 files and directories currently installed.)
+Preparing to unpack .../nginx-common_1.24.0-2ubuntu7.19_all.deb ...
+Unpacking nginx-common (1.24.0-2ubuntu7.19) ...
+Selecting previously unselected package nginx.
+Preparing to unpack .../nginx_1.24.0-2ubuntu7.19_amd64.deb ...
+Unpacking nginx (1.24.0-2ubuntu7.19) ...
+Setting up nginx-common (1.24.0-2ubuntu7.19) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service.
+Setting up nginx (1.24.0-2ubuntu7.19) ...
+ * Upgrading binary nginx                                                                                                                                                                                                         [ OK ] 
+Processing triggers for man-db (2.12.0-4build2) ...
+Processing triggers for ufw (0.36.2-6) ...
+Scanning processes...                                                                                                                                                                                                                    
+Scanning linux images...                                                                                                                                                                                                                 
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+```
+
+### 4 пробросить 80й порт на inetRouter2 8080
+
+На inetRouter2 прописываем:
+```
+root@inetRouter2:~# sysctl -w net.ipv4.ip_forward=1
+net.ipv4.ip_forward = 1
+root@inetRouter2:~# iptables -t nat -A PREROUTING -i ens3 -p tcp --dport 8080 -j DNAT --to-destination 192.168.0.2:80
+root@inetRouter2:~# iptables -t nat -A POSTROUTING -d 192.168.0.2 -p tcp --dport 80 -j MASQUERADE
+root@inetRouter2:~# iptables -A FORWARD -d 192.168.0.2 -p tcp --dport 80 -j ACCEPT
+root@inetRouter2:~# iptables -A FORWARD -s 192.168.0.2 -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+```
+
+Проверим на хостовой машине:
+```
+root@FE:~# curl -I http://192.168.255.14:8080
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 17 Nov 2026 07:03:15 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Tue, 17 Nov 2026 06:57:40 GMT
+Connection: keep-alive
+ETag: "6afbfae4-267"
+Accept-Ranges: bytes
+```
